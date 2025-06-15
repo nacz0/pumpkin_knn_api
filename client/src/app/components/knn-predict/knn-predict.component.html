@@ -1,0 +1,45 @@
+<div class="knn-container">
+    <div class="knn-input-container">
+        <div class="header">
+            <p>Wprowadź dane do algorytmu KNN:</p>
+        </div>
+        <div class="form-content">
+            <div class="field">
+                <label for="features">Podaj 12 cech (separator ";"): </label><br>
+                <textarea [(ngModel)]="features" name="features" type="text"></textarea>
+            </div>
+            <div class="field">
+                <label for="method">Metoda:</label><br>
+                <select name="method" [(ngModel)]="method">
+                    <option selected value="soft">Soft</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="k-value">Warość k:</label><br>
+                <input min="1" [(ngModel)]="kValue" placeholder="Wprowadź wartość k..." name="k-value" type="number">
+            </div>
+
+            @if (!isLoading) {
+                <button [disabled]="isLoading" (click)="runPredict()" class="predict-btn">Uruchom KNN</button>
+            } @else {
+                <span class="loader"></span>
+            }
+        </div>
+    </div>
+    <div class="knn-output-container">
+        @if (!isLoading) {
+        @if (predictedClass) {
+            <p>Wynik: <span class="secondary">{{ predictedClass }}</span>.</p>
+        } @else if (!errorMessage) {
+            <p>Wprowadź dane.</p>
+        }
+
+        @if (errorMessage) {
+            <p class="error-message">Błąd: {{ errorMessage }}.</p>
+        }
+        } @else {
+            <span class="loader"></span>
+        }
+    </div>
+</div>
